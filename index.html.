@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>التوعية بالأمن السيبراني</title>
+<style>
+body {
+  background: #101827;
+  color: white;
+  font-family: Arial;
+  text-align: center;
+  padding: 50px 15px;
+}
+.card {
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 15px;
+  max-width: 400px;
+  margin: auto;
+}
+button {
+  background: #2563eb;
+  color: white;
+  border: 0;
+  padding: 14px 25px;
+  border-radius: 8px;
+  font-size: 17px;
+}
+</style>
+</head>
+<body>
+<div class="card">
+<h2>🚨 اختبار التوعية الأمنية</h2>
+<p>هل تعرف كيف تكتشف الروابط المشبوهة؟</p>
+<button onclick="document.getElementById('msg').style.display='block'">
+ابدأ التجربة
+</button>
+<p id="msg" style="display:none;line-height:2">
+انتبه! لا تضغط على روابط مجهولة.<br>
+لا تشارك كلمات المرور أو بياناتك الشخصية.<br>
+هذه تجربة تعليمية آمنة.
+</p>
+</div>
+</body>
+</html>
