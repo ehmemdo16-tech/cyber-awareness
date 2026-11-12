@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -6,9 +7,7 @@
 <title>اختبار التوعية الأمنية</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   background: #101827;
@@ -25,13 +24,9 @@ body {
   border-radius: 20px;
   max-width: 450px;
   margin: 45px auto;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-h1 {
-  font-size: 27px;
-  margin-bottom: 25px;
-}
+h1 { font-size: 25px; }
 
 p {
   font-size: 18px;
@@ -50,15 +45,11 @@ input {
   text-align: center;
 }
 
-input::placeholder {
-  color: #94a3b8;
-}
-
 button {
   background: #2563eb;
   color: white;
   border: none;
-  padding: 14px 22px;
+  padding: 14px;
   border-radius: 10px;
   font-size: 17px;
   margin: 8px 0;
@@ -66,34 +57,21 @@ button {
   width: 100%;
 }
 
-button:hover {
-  background: #1d4ed8;
-}
-
 .option {
   background: #334155;
-  text-align: center;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
-.option:hover {
-  background: #475569;
-}
-
-#result {
-  line-height: 2;
-  font-size: 19px;
-  margin-top: 20px;
+.download {
+  background: #15803d;
 }
 
 .warning {
   color: #fbbf24;
-  font-size: 15px;
+  font-size: 14px;
 }
 
-.hidden {
-  display: none;
-}
+.hidden { display: none; }
 </style>
 </head>
 
@@ -104,57 +82,46 @@ button:hover {
 <h1>🚨 اختبار التوعية الأمنية</h1>
 
 <div id="welcome">
-
-<p>
-هل تعرف كيف تكتشف الروابط المشبوهة وتحمي حساباتك؟
-</p>
+<p>هل تعرف كيف تكتشف الروابط المشبوهة وتحمي حساباتك؟</p>
 
 <input
-type="text"
-id="username"
-placeholder="أدخل اسم المستخدم"
-maxlength="30"
-autocomplete="off"
+  type="text"
+  id="username"
+  placeholder="أدخل اسماً مستعاراً"
+  maxlength="30"
+  autocomplete="off"
 >
 
 <p class="warning">
-أدخل اسماً مستعاراً، ولا تستخدم بياناتك الشخصية.
+استخدم اسماً مستعاراً ولا تدخل بيانات شخصية.
 </p>
 
-<button onclick="startQuiz()">
-ابدأ التجربة
-</button>
-
+<button onclick="startQuiz()">ابدأ التجربة</button>
 </div>
 
 <div id="quiz" class="hidden">
-
 <p id="greeting"></p>
-
 <h3 id="question"></h3>
-
 <div id="answers"></div>
-
 <p id="progress"></p>
-
 </div>
 
 <div id="final" class="hidden">
-
 <h2>🎉 انتهى الاختبار!</h2>
-
 <p id="finalName"></p>
-
 <p id="result"></p>
+
+<button class="download" onclick="downloadResult()">
+⬇️ تحميل نتيجتي
+</button>
 
 <button onclick="resetQuiz()">
 إعادة الاختبار
 </button>
-
 </div>
 
 <p class="warning">
-هذه تجربة تعليمية آمنة للتوعية بالأمن السيبراني.
+تجربة تعليمية آمنة للتوعية بالأمن السيبراني.
 </p>
 
 </div>
@@ -162,57 +129,45 @@ autocomplete="off"
 <script>
 
 const questions = [
-
 {
 q: "وصلك رابط من شخص مجهول يطلب بياناتك، ماذا تفعل؟",
-
 a: [
 "أفتح الرابط فوراً",
 "لا أفتحه وأتحقق من مصدره",
 "أرسل بياناتي"
 ],
-
 correct: 1
 },
-
 {
 q: "كيف تتحقق من أن الموقع موثوق؟",
-
 a: [
 "أتحقق من عنوان الموقع ومصدره",
 "أثق بأي تصميم جميل",
 "أدخل كلمة المرور للتجربة"
 ],
-
 correct: 0
 },
-
 {
 q: "طلب منك شخص كلمة مرور حسابك، ماذا تفعل؟",
-
 a: [
 "أرسلها له",
 "أشاركها مع أصدقائي",
 "لا أشارك كلمة المرور مع أحد"
 ],
-
 correct: 2
 }
-
 ];
 
 let current = 0;
 let score = 0;
 let username = "";
+let finishDate = "";
 
 function startQuiz() {
-
-  username = document
-    .getElementById("username")
-    .value.trim();
+  username = document.getElementById("username").value.trim();
 
   if (!username) {
-    alert("يرجى إدخال اسم المستخدم أولاً");
+    alert("يرجى إدخال اسم مستعار أولاً");
     return;
   }
 
@@ -220,51 +175,36 @@ function startQuiz() {
   score = 0;
 
   document.getElementById("welcome").classList.add("hidden");
-
   document.getElementById("quiz").classList.remove("hidden");
 
   document.getElementById("greeting").textContent =
     "مرحباً " + username + "، بالتوفيق! 🌟";
 
   showQuestion();
-
 }
 
 function showQuestion() {
-
   const q = questions[current];
 
   document.getElementById("question").textContent =
     "السؤال " + (current + 1) + ": " + q.q;
 
   document.getElementById("progress").textContent =
-    "السؤال " + (current + 1) +
-    " من " + questions.length;
+    "السؤال " + (current + 1) + " من " + questions.length;
 
   const area = document.getElementById("answers");
-
   area.innerHTML = "";
 
   q.a.forEach((answer, index) => {
-
     const btn = document.createElement("button");
-
     btn.className = "option";
-
     btn.textContent = answer;
-
-    btn.onclick = function() {
-      checkAnswer(index);
-    };
-
+    btn.onclick = () => checkAnswer(index);
     area.appendChild(btn);
-
   });
-
 }
 
 function checkAnswer(index) {
-
   if (index === questions[current].correct) {
     score++;
   }
@@ -272,50 +212,56 @@ function checkAnswer(index) {
   current++;
 
   if (current < questions.length) {
-
     showQuestion();
-
   } else {
-
     finishQuiz();
-
   }
-
 }
 
 function finishQuiz() {
+  finishDate = new Date().toLocaleString("ar");
 
   document.getElementById("quiz").classList.add("hidden");
-
   document.getElementById("final").classList.remove("hidden");
 
   document.getElementById("finalName").textContent =
     "أحسنت يا " + username + "!";
 
   document.getElementById("result").textContent =
-    "نتيجتك: " + score + " من " + questions.length +
-    " — " +
-    (score === 3
-      ? "ممتاز! لديك وعي أمني جيد 👏"
-      : score === 2
-      ? "جيد جداً! واصل التعلم 🌟"
-      : "حاول مرة أخرى وطوّر معرفتك الأمنية 📚");
+    "نتيجتك: " + score + " من " + questions.length;
+}
 
+function downloadResult() {
+  const csv = "\uFEFF" +
+    "اسم المستخدم,النتيجة,التاريخ\n" +
+    '"' + username.replace(/"/g, '""') + '",' +
+    score + " من " + questions.length + ',"' +
+    finishDate.replace(/"/g, '""') + '"';
+
+  const blob = new Blob([csv], {
+    type: "text/csv;charset=utf-8;"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "my-quiz-result.csv";
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  URL.revokeObjectURL(url);
 }
 
 function resetQuiz() {
-
   document.getElementById("final").classList.add("hidden");
-
   document.getElementById("welcome").classList.remove("hidden");
-
   document.getElementById("username").value = "";
-
   username = "";
-
 }
 
 </script>
-
 </body>
 </html>
