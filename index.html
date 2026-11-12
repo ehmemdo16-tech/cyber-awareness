@@ -4,44 +4,129 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>التوعية بالأمن السيبراني</title>
+<title>اختبار التوعية الأمنية</title>
 <style>
 body {
   background: #101827;
   color: white;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   text-align: center;
-  padding: 50px 15px;
+  padding: 30px 15px;
 }
 .card {
   background: #1e293b;
   padding: 25px;
-  border-radius: 15px;
-  max-width: 400px;
+  border-radius: 18px;
+  max-width: 450px;
   margin: auto;
 }
 button {
   background: #2563eb;
   color: white;
   border: 0;
-  padding: 14px 25px;
+  padding: 14px 22px;
   border-radius: 8px;
   font-size: 17px;
+  margin: 8px;
+  cursor: pointer;
 }
+button:hover { background: #1d4ed8; }
+.option {
+  display: block;
+  width: 100%;
+}
+#result { line-height: 2; }
 </style>
 </head>
 <body>
+
 <div class="card">
 <h2>🚨 اختبار التوعية الأمنية</h2>
-<p>هل تعرف كيف تكتشف الروابط المشبوهة؟</p>
-<button onclick="document.getElementById('msg').style.display='block'">
-ابدأ التجربة
-</button>
-<p id="msg" style="display:none;line-height:2">
-انتبه! لا تضغط على روابط مجهولة.<br>
-لا تشارك كلمات المرور أو بياناتك الشخصية.<br>
-هذه تجربة تعليمية آمنة.
-</p>
+<p id="question">هل تعرف كيف تكتشف الروابط المشبوهة؟</p>
+
+<div id="answers"></div>
+
+<button id="start" onclick="startQuiz()">ابدأ التجربة</button>
+
+<p id="result"></p>
 </div>
+
+<script>
+const questions = [
+{
+q: "وصلك رابط من شخص مجهول يطلب بياناتك، ماذا تفعل؟",
+a: ["أفتح الرابط فوراً", "لا أفتحه وأتحقق من مصدره", "أرسل بياناتي"],
+correct: 1
+},
+{
+q: "كيف تعرف أن الموقع قد يكون مزيفاً؟",
+a: ["أتحقق من عنوان الموقع ومصدره", "أثق بأي تصميم جميل", "أدخل كلمة المرور للتجربة"],
+correct: 0
+},
+{
+q: "طلب منك شخص كلمة مرور حسابك، ماذا تفعل؟",
+a: ["أرسلها له", "أشاركها مع أصدقائي", "لا أشارك كلمة المرور مع أحد"],
+correct: 2
+}
+];
+
+let current = 0;
+let score = 0;
+
+function startQuiz() {
+  current = 0;
+  score = 0;
+  document.getElementById("start").style.display = "none";
+  document.getElementById("result").textContent = "";
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[current];
+  document.getElementById("question").textContent =
+    "السؤال " + (current + 1) + ": " + q.q;
+
+  const area = document.getElementById("answers");
+  area.innerHTML = "";
+
+  q.a.forEach((answer, index) => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.textContent = answer;
+    btn.onclick = () => checkAnswer(index);
+    area.appendChild(btn);
+  });
+}
+
+function checkAnswer(index) {
+  if (index === questions[current].correct) {
+    score++;
+  }
+
+  current++;
+
+  if (current < questions.length) {
+    showQuestion();
+  } else {
+    finishQuiz();
+  }
+}
+
+function finishQuiz() {
+  document.getElementById("question").textContent =
+    "انتهى الاختبار! 🎉";
+
+  document.getElementById("answers").innerHTML = "";
+
+  document.getElementById("result").textContent =
+    "نتيجتك: " + score + " من " + questions.length +
+    " — " + (score === 3 ? "ممتاز! 👏" : "واصل التعلم لتحسين وعيك الأمني.");
+
+  document.getElementById("start").textContent = "إعادة الاختبار";
+  document.getElementById("start").style.display = "inline-block";
+}
+</script>
+
 </body>
 </html>
+
